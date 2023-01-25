@@ -5,7 +5,7 @@ node {
         checkout(
                 [$class: 'GitSCM',
                  branches: [[name: "/main"]],
-                 userRemoteConfigs: [[url: 'https://github.com/kate1456/Jenkins']]]
+                 userRemoteConfigs: [[url: 'https://github.com/kate1456/Jenkins.git']]]
         )
     }
     stage('Build') {
