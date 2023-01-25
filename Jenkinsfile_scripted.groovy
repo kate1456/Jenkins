@@ -4,7 +4,7 @@ node {
     stage('Checkout SCM') {
         checkout(
                 [$class: 'GitSCM',
-                 branches: [[name: "refs/heads/${BRANCH}"]],
+                 branches: [[name: "/main"]],
                  userRemoteConfigs: [[url: 'https://github.com/kate1456/Jenkins']]]
         )
     }
@@ -13,7 +13,7 @@ node {
     }
     stage('Run Tests') {
         try {
-            sh "${mvn} test"
+            sh "${mvn} test  -Dtype.browser=${BROWSER}"
         }
         catch (Exception e) {
             echo "Test run was broken"
