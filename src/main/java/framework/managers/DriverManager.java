@@ -3,21 +3,19 @@ package framework.managers;
 import framework.utils.PropsConst;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.net.MalformedURLException;
 import java.net.URI;
+import java.util.Map;
 
 import static framework.utils.PropsConst.TYPE_BROWSER;
 
 public class DriverManager {
 
-    private static DriverManager INSTANCE = null;
     private static WebDriver driver;
     private static TestPropManager propManager = TestPropManager.getInstance();
 
@@ -25,14 +23,7 @@ public class DriverManager {
 
     }
 
-    public static DriverManager getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new DriverManager();
-        }
-        return INSTANCE;
-    }
-
-    public WebDriver getDriver() {
+    public static WebDriver getDriver() {
         if (driver == null) {
             initDriver();
         }
@@ -55,21 +46,24 @@ public class DriverManager {
                 break;
             case "remote":
                 DesiredCapabilities capabilities = new DesiredCapabilities();
-                capabilities.setBrowserName("chrome");
-                capabilities.setVersion("84.0");
-                capabilities.setCapability("enableVNC", true);
-                capabilities.setCapability("enableVideo", false);
+                capabilities.setCapability("browserName", "chrome");
+                capabilities.setCapability("browserVersion", "108.0");
+                capabilities.setCapability("selenoid:options", Map.<String, Object>of(
+                        "enableVNC", true,
+                        "enableVideo", true
+                ));
                 try {
-                    driver = new RemoteWebDriver(
-                            URI.create("http://51.250.100.60:4444/wd/hub/").toURL(),
-                            capabilities);
+                    RemoteWebDriver driver = new RemoteWebDriver(
+                            URI.create("http://149.154.71.152:4444/wd/hub").toURL(),
+                            capabilities
+                    );
                 } catch (MalformedURLException e) {
-                    e.printStackTrace();
+                    throw new RuntimeException(e);
                 }
         }
     }
 
-    public void quitDriver() {
+    public static void quitDriver() {
         if (driver != null) {
             driver.quit();
             driver = null;

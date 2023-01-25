@@ -1,6 +1,5 @@
 package framework.pages;
 
-import framework.managers.DriverManager;
 import framework.managers.PageManager;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
@@ -9,13 +8,15 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import static framework.managers.DriverManager.getDriver;
+
 public class BasePage {
-    protected DriverManager driverManager = DriverManager.getInstance();
-    protected WebDriverWait wait = new WebDriverWait(driverManager.getDriver(), 10, 1000);
+
+    protected WebDriverWait wait = new WebDriverWait(getDriver(), 10, 1000);
     protected PageManager pageManager = PageManager.getInstance();
 
     public BasePage() {
-        PageFactory.initElements(driverManager.getDriver(), this);
+        PageFactory.initElements(getDriver(), this);
     }
 
     protected WebElement waitUntilElementToBeClicable(WebElement element) {
@@ -29,33 +30,33 @@ public class BasePage {
     protected WebElement scrollWithOffset(WebElement element, int x, int y) {
         String code = "window.scroll(" + (element.getLocation().x + x) + ","
                 + (element.getLocation().y + y) + ");";
-        ((JavascriptExecutor) driverManager.getDriver()).executeScript(code, element, x, y);
+        ((JavascriptExecutor) getDriver()).executeScript(code, element, x, y);
         return element;
     }
 
     protected WebElement scrollToElementJs(WebElement element) {
-        JavascriptExecutor javascriptExecutor = (JavascriptExecutor) driverManager.getDriver();
+        JavascriptExecutor javascriptExecutor = (JavascriptExecutor) getDriver();
         javascriptExecutor.executeScript("arguments[0].scrollIntoView(true);", element);
         return element;
     }
 
     protected WebElement clickToElementJs(WebElement element) {
-        JavascriptExecutor javascriptExecutor = (JavascriptExecutor) driverManager.getDriver();
+        JavascriptExecutor javascriptExecutor = (JavascriptExecutor) getDriver();
         javascriptExecutor.executeScript("arguments[0].click();", element);
         return element;
     }
 
     protected FramePage getFramePage(WebElement element){
-        driverManager.getDriver().switchTo().frame(element);
+        getDriver().switchTo().frame(element);
         return pageManager.getFramePage();
     }
 
     protected void waitStabilityPage(int maxWaitMillis, int pollDelimiter) {
         double startTime = System.currentTimeMillis();
         while (System.currentTimeMillis() < startTime + maxWaitMillis) {
-            String prevState = driverManager.getDriver().getPageSource();
+            String prevState = getDriver().getPageSource();
             wait(pollDelimiter); // <-- would need to wrap in a try catch
-            if (prevState.equals(driverManager.getDriver().getPageSource())) {
+            if (prevState.equals(getDriver().getPageSource())) {
                 return;
             }
         }
@@ -70,7 +71,7 @@ public class BasePage {
     }
     protected void sendKeysByOneChar(WebElement element, String value){
         String[] strings = value.split("");
-        Actions actions = new Actions(driverManager.getDriver());
+        Actions actions = new Actions(getDriver());
         for (String charItem: strings) {
             actions.moveToElement(element).pause(100).click(element).sendKeys(charItem).pause(100).build().perform();
         }

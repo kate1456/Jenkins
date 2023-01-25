@@ -13,7 +13,7 @@ node {
     }
     stage('Run Tests') {
         try {
-            sh "${mvn} install"
+            sh "${mvn} test"
         }
         catch (Exception e) {
             echo "Test run was broken"
