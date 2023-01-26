@@ -60,7 +60,7 @@ public class FramePage extends BasePage {
                 String parameterInString = parameter
                         .findElement(By.xpath("./..//span/span"))
                         .getText()
-                        .replaceAll("[^0-9]", "");
+                        .replaceAll("[^0-9,]", "");
                 Assertions.assertEquals(meaning, parameterInString,
                         "Параметр " + nameOfParameter + " не верный");
                 return this;
