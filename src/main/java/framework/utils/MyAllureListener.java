@@ -9,21 +9,16 @@ import org.openqa.selenium.TakesScreenshot;
 
 import static framework.managers.DriverManager.getDriver;
 
-public class MyAllureListener extends AllureJunit5 implements /*TestWatcher*/AfterTestExecutionCallback {
+public class MyAllureListener extends AllureJunit5 implements AfterTestExecutionCallback {
 
-@Attachment(value = "Screenshot", type = "image/png",fileExtension = "png")
-public byte[] getScreenshot(){
-    return ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.BYTES);
-}
+    @Attachment(value = "Screenshot", type = "image/png", fileExtension = "png")
+    public byte[] getScreenshot() {
+        return ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.BYTES);
+    }
 
-//@Override
-//    public void testFailed(ExtensionContext context, Throwable cause){
-//    getScreenshot();
-//
-//}
     @Override
     public void afterTestExecution(ExtensionContext extensionContext) {
-        if(extensionContext.getExecutionException().isPresent()){
+        if (extensionContext.getExecutionException().isPresent()) {
             getScreenshot();
 
         }

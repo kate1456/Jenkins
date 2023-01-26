@@ -31,9 +31,9 @@ public class DriverManager {
     }
 
     private static void initDriver() {
-        switch (propManager.getProperty(TYPE_BROWSER)){
+        switch (propManager.getProperty(TYPE_BROWSER)) {
             case "firefox":
-                System.setProperty("webdriver.gecko.driver", propManager.getProperty(PropsConst.PATH_CHROME_DRIVER_WINDOWS));
+                System.setProperty("webdriver.gecko.driver", propManager.getProperty(PropsConst.PATH_GRECO_DRIVER_WINDOWS));
                 driver = new FirefoxDriver();
                 break;
             case "edge":
@@ -53,7 +53,7 @@ public class DriverManager {
                         "enableVideo", true
                 ));
                 try {
-                    RemoteWebDriver driver = new RemoteWebDriver(
+                     driver = new RemoteWebDriver(
                             URI.create("http://149.154.71.152:4444/wd/hub").toURL(),
                             capabilities
                     );

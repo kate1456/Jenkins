@@ -93,7 +93,8 @@
                     </argLine>
 
                     <systemPropertyVariables>
-                        <allure.results.directory>${project.build.directory}\reports\allure-results</allure.results.directory>
+                        <allure.results.directory>${project.build.directory}\reports\allure-results
+                        </allure.results.directory>
                     </systemPropertyVariables>
                     <properties>
                         <property>
