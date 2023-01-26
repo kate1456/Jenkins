@@ -14,7 +14,7 @@ pipeline{
 
         stage('Run Tests'){
             steps{
-                sh "${mvn} test -Dtype.browser=${BROWSER}"
+                sh "${mvn} test -Dbrowser=${BROWSER}"
             }
         }
         stage('Allure Report Generation'){
