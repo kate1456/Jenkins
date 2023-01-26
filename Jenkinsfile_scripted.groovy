@@ -1,4 +1,4 @@
-def mvn = "/var/jenkins_home/tools/hudson.tasks.Maven_MavenInstallation/3.8.7/bin/mvn"
+def mvn = "/var/jenkins_home/tools/hudson.tasks.Maven_MavenInstallation/3.6.3/bin/mvn"
 
 node {
     stage('Checkout SCM') {
