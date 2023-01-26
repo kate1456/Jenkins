@@ -89,11 +89,11 @@
                     <argLine>
                         -Dfile.encoding=${encoding.type}
                         -Djunit.jupiter.extensions.autodetection.enabled=true
-                        -javaagent:"${settings.localRepository}\org\aspectj\aspectjweaver\${aspectj.version}\aspectjweaver-${aspectj.version}.jar"
+                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
                     </argLine>
 
                     <systemPropertyVariables>
-                        <allure.results.directory>${project.build.directory}\reports\allure-results
+                        <allure.results.directory>${project.build.directory}/reports/allure-results
                         </allure.results.directory>
                     </systemPropertyVariables>
                     <properties>
@@ -120,8 +120,8 @@
                 <version>${allure-maven.version}</version>
                 <configuration>
                     <reportVersion>${allure-maven.version}</reportVersion>
-                    <resultsDirectory>${project.build.directory}\reports\allure-results</resultsDirectory>
-                    <reportDirectory>${project.build.directory}\reports\allure-reports</reportDirectory>
+                    <resultsDirectory>${project.build.directory}/reports/allure-results</resultsDirectory>
+                    <reportDirectory>${project.build.directory}/reports/allure-reports</reportDirectory>
                 </configuration>
                 <executions>
                     <execution>
