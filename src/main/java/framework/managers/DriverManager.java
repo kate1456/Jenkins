@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
@@ -25,41 +26,30 @@ public class DriverManager {
 
     public static WebDriver getDriver() {
         if (driver == null) {
-            initDriver();
+            initRemoteDriver();
         }
         return driver;
     }
 
-    private static void initDriver() {
-        switch (propManager.getProperty(TYPE_BROWSER)) {
-            case "firefox":
-                System.setProperty("webdriver.gecko.driver", propManager.getProperty(PropsConst.PATH_GRECO_DRIVER_WINDOWS));
-                driver = new FirefoxDriver();
-                break;
-            case "edge":
-                System.setProperty("webdriver.edge.driver", propManager.getProperty(PropsConst.PATH_EDGE_DRIVER_WINDOWS));
-                driver = new EdgeDriver();
-                break;
+    private static void initRemoteDriver() {
+        String browser = System.getProperty("browser", "chrome");
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+        capabilities.setCapability(CapabilityType.ACCEPT_INSECURE_CERTS,true);
+        capabilities.setCapability("enableVNC", true);
+        capabilities.setCapability("enableVideo", false);
+        capabilities.setBrowserName(browser);
+        switch (browser) {
             case "chrome":
-                System.setProperty("webdriver.chrome.driver", propManager.getProperty(PropsConst.PATH_CHROME_DRIVER_WINDOWS));
-                driver = new ChromeDriver();
+            case "firefox":
+                capabilities.setVersion("109.0");
                 break;
-            case "remote":
-                DesiredCapabilities capabilities = new DesiredCapabilities();
-                capabilities.setCapability("browserName", "chrome");
-                capabilities.setCapability("browserVersion", "108.0");
-                capabilities.setCapability("selenoid:options", Map.<String, Object>of(
-                        "enableVNC", true,
-                        "enableVideo", true
-                ));
-                try {
-                     driver = new RemoteWebDriver(
-                            URI.create("http://149.154.71.152:4444/wd/hub").toURL(),
-                            capabilities
-                    );
-                } catch (MalformedURLException e) {
-                    throw new RuntimeException(e);
-                }
+            case "opera":
+                capabilities.setVersion("94.0");
+        }
+        try {
+            driver = new RemoteWebDriver(URI.create("http://149.154.71.152:4444/wd/hub").toURL(), capabilities);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
         }
     }
 
