@@ -21,10 +21,10 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
 
         <!-- Dependencies version -->
-        <selenium-java.version>3.141.59</selenium-java.version>
-        <junit-jupiter.version>5.8.2</junit-jupiter.version>
+        <selenium-java.version>4.7.1</selenium-java.version>
+        <junit-jupiter.version>5.9.0</junit-jupiter.version>
         <junit-platform-launcher.version>1.8.2</junit-platform-launcher.version>
-        <allure-junit5.version>2.13.5</allure-junit5.version>
+        <allure-junit5.version>2.13.6</allure-junit5.version>
         <aspectj.version>1.9.7</aspectj.version>
         <maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
         <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
