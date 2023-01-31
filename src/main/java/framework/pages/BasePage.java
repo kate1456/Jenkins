@@ -73,7 +73,7 @@ public class BasePage {
         String[] strings = value.split("");
         Actions actions = new Actions(getDriver());
         for (String charItem: strings) {
-            actions.moveToElement(element).pause(100).click(element).sendKeys(charItem).pause(100).build().perform();
+            actions.moveToElement(element).pause(100).sendKeys(charItem).pause(100).build().perform();
         }
 
     }
